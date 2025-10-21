@@ -3,7 +3,7 @@
 
 This tool allows you to inject and extract save files from bootleg Game Boy carts.
 
-It uses BennVenn's NootNoot.exe and works with more batteryless bootleg carts than my V1 version.
+It uses [BennVenn's](https://bennvenn.myshopify.com/) NootNoot.exe and works with more batteryless bootleg carts than my V1 version.
 
 
 You need AutoHotkey v1 for running the program or just [download the executable](https://github.com/elModo7/GBC-Batteryless-Save-Tool-V2/releases/) from releases section.
@@ -19,4 +19,3 @@ You need AutoHotkey v1 for running the program or just [download the executable]
 > [!NOTE]  
 > This tool involves no ROM file sharing, it just reads and injects to your own dumped ROMs.
 > Most of the UI was made by ChatGPT because I suck at frontend
-# GBC-Batteryless-Save-Tool-V2
