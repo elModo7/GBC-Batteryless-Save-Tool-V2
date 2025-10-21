@@ -13,7 +13,7 @@ You need AutoHotkey v1 for running the program or just [download the executable]
 ## YouTube Videos (old version, to be updated):
 [📹\[English\] YouTube video](https://youtu.be/0jAVcUjAwSY)
 
-[📹\[Spanish\] YouTube video](https://youtu.be/IhN1iViYwTg)
+[📹\[Spanish\] YouTube video](https://youtu.be/WMO_GL3q988)
 
 > Pull requests are welcome, also, if you found it useful ⭐ stars on my repos help me promote my porfolio 🚀.
 
