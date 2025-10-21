@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="bootstrap.min.css" rel="stylesheet">
+  <script src="jquery.min.js"></script>
+  <script src="bootstrap.min.js"></script>
+  <title>Bootleg Save Injector & Extractor</title>
+  <style>
+    /* --- Reset-ish --- */
+    html, body { height: 100%; width: 100%; }
+    body { margin: 0; font-family: Segoe UI, Tahoma, Arial, sans-serif; background: #0f172a; color: #e5e7eb; }
+    *, *:before, *:after { box-sizing: border-box; }
+    
+    .title-btn {
+	  padding: 0.35em 1.0em;
+	  cursor: pointer;
+	  vertical-align: bottom;
+	  font-family: Webdings;
+	  font-size: 11pt;
+	}
+
+	.title-btn:hover {
+	  background: rgba(0, 0, 0, .2);
+	}
+
+	.title-btn-close:hover {
+	  background: #dc3545;
+	}
+
+    /* --- Layout --- */
+    .wrap { max-width: 980px; margin: 24px auto; padding: 0 16px; }
+
+    /* Top bar: input + button */
+    .topbar { background: #111827; border: 1px solid #1f2937; border-radius: 12px; padding: 12px; box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+    .row { zoom: 1; } /* IE float containment */
+    .row:before, .row:after { content: ""; display: table; }
+    .row:after { clear: both; }
+
+    .field { float: left; width: 75%; padding-right: 8px; }
+    .actions { float: left; width: 25%; text-align: right; }
+
+    .input { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid #374151; background: #0b1220; color: #e5e7eb; outline: none; }
+    .input:focus { border-color: #60a5fa; box-shadow: 0 0 0 3px rgba(96,165,250,.25); }
+
+    .btn { display: inline-block; padding: 12px 18px; border-radius: 10px; border: 1px solid #2563eb; background: #2563eb; color: white; text-decoration: none; cursor: pointer; font-weight: 600; }
+    .btn:active { position: relative; top: 1px; }
+    .btn.secondary { border-color: #374151; background: #111827; color: #e5e7eb; }
+
+    /* Cards */
+    .grid { margin-top: 18px; }
+    .col { float: left; width: 50%; padding: 8px; }
+    @media (max-width: 800px) { .col { width: 100%; } }
+
+    .card { height: 100%; background: #0b1220; border: 1px solid #1f2937; border-radius: 14px; padding: 16px; box-shadow: 0 8px 24px rgba(0,0,0,.3); }
+    .card h2 { margin: 0 0 6px; font-size: 18px; }
+    .sub { color: #9ca3af; font-size: 12px; margin-bottom: 12px; }
+
+    textarea, .mono { width: 100%; min-height: 120px; padding: 10px 12px; border-radius: 10px; border: 1px solid #374151; background: #0b1220; color: #e5e7eb; resize: vertical; }
+
+    .stack > * { margin-right: 8px; }
+    .stack > *:last-child { margin-right: 0; }
+
+    .status { margin-top: 16px; font-size: 13px; color: #93c5fd; }
+    .status.error { color: #fca5a5; }
+
+    .footer { margin: 24px 0 8px; text-align: center; color: #64748b; font-size: 12px; }
+    .pill { display: inline-block; padding: 4px 8px; border: 1px solid #334155; border-radius: 999px; }
+    .k { font-family: Consolas, Menlo, Monaco, monospace; background: #111827; padding: 0 6px; border-radius: 6px; border: 1px solid #1f2937; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="d-flex align-items-stretch bg-dark text-white" oncontextmenu="return false;">
+      <span id="windowTitle" class="flex-grow-1 px-2 py-1" onmousedown="neutron.DragTitleBar()">NootNoot GUI • Bootleg Cart Save Injector & Extractor • BennVenn • elModo7 / VictorDevLog 2025</span>
+      <span class="title-btn" onclick="neutron.Minimize()">0</span>
+      <span class="title-btn" onclick="neutron.Maximize()">1</span>
+      <span class="title-btn title-btn-close" onclick="neutron.Close()">r</span>
+    </div>
+  </header>
+  <div class="wrap" oncontextmenu="return false;">
+    <!-- Top: field + button -->
+    <div class="topbar">
+      <div class="row">
+        <div class="field">
+          <label for="keyInput" style="display:block; font-size:12px; color:#9ca3af; margin:0 0 6px 20px;">Batteryless ROM</label>
+          <input id="keyInput" class="input" type="text" style="margin:0 0 0 20px;" disabled placeholder="No ROM file selected." />
+        </div>
+        <div class="actions" style="padding-top: 26px;">
+          <button id="goBtn" onClick="ahk.BrowseRom(event)" class="btn" style="margin:0 20px;" title="Run with key">Select Batteryless ROM</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Two function cards: Insert / Extract -->
+    <div class="grid row">
+      <!-- INSERT -->
+      <div class="col">
+        <div class="card">
+          <h2>Insert Save File</h2>
+          <div class="sub"><span class="k">Store new save data</span> in your batteryless dump.</div>
+          <div style="height:10px"></div>
+          <div class="stack">
+            <button id="insertBtn" onClick="ahk.InjectSave(event)" class="btn">Insert</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- EXTRACT -->
+      <div class="col">
+        <div class="card">
+          <h2>Extract Save File</h2>
+          <div class="sub">Get a <span class="k">clean save file</span> from your batteryless dump.</div>
+          <div style="height:10px"></div>
+          <div class="stack">
+            <button id="extractBtn" onClick="ahk.ExtractSave(event)" class="btn">Extract</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="status" class="status" aria-live="polite"></div>
+
+    <div class="footer">
+      <span class="pill">Batteryless Save Injector & Extractor • BennVenn • elModo7 / VictorDevLog</span>
+    </div>
+  </div>
+
+  <script>
+    // --- Small helper: feature-light DOM access for IE/Trident ---
+    function $(id){ return document.getElementById(id); }
+
+    // Bridge to AutoHotkey (Neutron) — several strategies for compatibility.
+    // Pick what works for your setup on the AHK side; these are tried in order.
+    function callAHK(command, payload) {
+      payload = String(payload == null ? '' : payload);
+      var key = String($('keyInput').value || '');
+      var message = command + '|' + key + '|' + payload;
+
+      // 1) Custom URL scheme the AHK host can intercept (commonly used in WebBrowser controls)
+      try {
+        window.location.href = 'ahk:' + encodeURIComponent(message);
+        return true;
+      } catch (e) { /* continue */ }
+
+      // 2) window.external dispatch (if your host exposes a callable method)
+      try {
+        if (window.external && typeof window.external.Invoke === 'unknown') {
+          // Some Trident hosts expose an IDispatch method named Invoke
+          window.external.Invoke(message);
+          return true;
+        }
+      } catch (e2) { /* continue */ }
+
+      // 3) Fallback: console log so you can see the message when running standalone
+      if (window.console && console.log) console.log('[AHK]', message);
+      setStatus('Simulated AHK call: ' + message);
+      return false;
+    }
+
+    function setStatus(text, isError){
+      var el = $('status');
+      el.className = 'status' + (isError ? ' error' : '');
+      el.innerHTML = text || '';
+    }
+
+    function copyToClipboard(text){
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); setStatus('Copied to clipboard'); }
+      catch(e){ setStatus('Copy failed', true); }
+      document.body.removeChild(ta);
+    }
+  </script>
+</body>
+</html>
