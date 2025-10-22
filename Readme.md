@@ -1,6 +1,8 @@
 
 # Bootleg one-chip Save Manager v2
 
+> V1 here: https://github.com/elModo7/GBC-Batteryless-Save-Tool
+
 This tool allows you to inject and extract save files from bootleg Game Boy carts.
 
 It uses [BennVenn's](https://bennvenn.myshopify.com/) NootNoot.exe and works with more batteryless bootleg carts than my V1 version.
@@ -10,7 +12,7 @@ It uses [BennVenn's](https://bennvenn.myshopify.com/) NootNoot.exe and works wit
 
 You need AutoHotkey v1 for running the program or just [download the executable](https://github.com/elModo7/GBC-Batteryless-Save-Tool-V2/releases/) from releases section.
 
-## YouTube Videos (old version, to be updated):
+## YouTube Videos (v2):
 [📹\[English\] YouTube video](https://youtu.be/WMO_GL3q988)
 
 [📹\[Spanish\] YouTube video](https://youtu.be/dV9vCqr0tAE)
