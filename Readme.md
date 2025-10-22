@@ -11,9 +11,9 @@ It uses [BennVenn's](https://bennvenn.myshopify.com/) NootNoot.exe and works wit
 You need AutoHotkey v1 for running the program or just [download the executable](https://github.com/elModo7/GBC-Batteryless-Save-Tool-V2/releases/) from releases section.
 
 ## YouTube Videos (old version, to be updated):
-[📹\[English\] YouTube video](https://youtu.be/0jAVcUjAwSY)
+[📹\[English\] YouTube video](https://youtu.be/WMO_GL3q988)
 
-[📹\[Spanish\] YouTube video](https://youtu.be/WMO_GL3q988)
+[📹\[Spanish\] YouTube video](https://youtu.be/dV9vCqr0tAE)
 
 > Pull requests are welcome, also, if you found it useful ⭐ stars on my repos help me promote my porfolio 🚀.
 
